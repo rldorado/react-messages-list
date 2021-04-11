@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMessagesAction } from '../actions';
 import { messagesSelector } from '../selectors';
 import { getMessagesList } from './../fakeApi';
+import { ListItem } from './ListItem';
 
 export const List = () => {
     const dispatch = useDispatch();
@@ -19,9 +20,9 @@ export const List = () => {
     });
 
     return (
-        <div>
+        <div className="container-fluid">
             {messages.map((message) => (
-                <li key={message.id}>{message.text}</li>
+                <ListItem key={message.id} message={message} />
             ))}
         </div>
     );
