@@ -1,6 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { deleteMessageAction } from '../actions';
 import { rateSelector } from '../selectors';
 import { Message } from './../types';
 
@@ -9,9 +10,14 @@ type ListItemProps = {
 };
 
 export const ListItem = ({ message }: ListItemProps) => {
-    const { text, btcAmount, messageContent } = message;
+    const dispatch = useDispatch();
+    const { id, text, canDelete, btcAmount, messageContent } = message;
 
     const rate: number = parseFloat(useSelector(rateSelector));
+
+    const handleDelete = useCallback(() => {
+        dispatch(deleteMessageAction(id));
+    }, [dispatch, id]);
 
     return (
         <div className="card border-primary mb-2">
@@ -32,6 +38,11 @@ export const ListItem = ({ message }: ListItemProps) => {
                     </div>
                 ) : (
                     <div>{messageContent}</div>
+                )}
+                {canDelete && (
+                    <button className="btn btn-danger" onClick={handleDelete}>
+                        DELETE
+                    </button>
                 )}
             </div>
         </div>

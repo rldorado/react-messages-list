@@ -1,5 +1,6 @@
 export const SET_MESSAGES = 'SET_MESSAGES';
 export const UPDATE_RATE = 'UPDATE_RATE';
+export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 
 // Interfaces
 export type Message = {
@@ -26,4 +27,9 @@ export type SetMessagesAction = {
 export type UpdateRateAction = {
     type: typeof UPDATE_RATE;
     payload: string;
+};
+
+export type DeleteMessageAction = {
+    type: typeof DELETE_MESSAGE;
+    payload: number | string;
 };
