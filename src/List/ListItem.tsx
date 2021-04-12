@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { deleteMessageAction } from '../actions';
+import { addServiceMessageAction, deleteMessageAction } from '../actions';
 import { rateSelector } from '../selectors';
 import { Message } from './../types';
 
@@ -11,12 +11,16 @@ type ListItemProps = {
 
 export const ListItem = ({ message }: ListItemProps) => {
     const dispatch = useDispatch();
-    const { id, text, canDelete, btcAmount, messageContent } = message;
+    const { id, text, canDelete, btcAmount, messageContent, isService } = message;
 
     const rate: number = parseFloat(useSelector(rateSelector));
 
     const handleDelete = useCallback(() => {
         dispatch(deleteMessageAction(id));
+    }, [dispatch, id]);
+
+    const handleAddServiceMessage = useCallback(() => {
+        dispatch(addServiceMessageAction(id));
     }, [dispatch, id]);
 
     return (
@@ -42,6 +46,11 @@ export const ListItem = ({ message }: ListItemProps) => {
                 {canDelete && (
                     <button className="btn btn-danger" onClick={handleDelete}>
                         DELETE
+                    </button>
+                )}
+                {!isService && (
+                    <button className="btn btn-secondary" onClick={handleAddServiceMessage}>
+                        Add service message
                     </button>
                 )}
             </div>

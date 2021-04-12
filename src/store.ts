@@ -1,11 +1,14 @@
 import { createStore, combineReducers } from 'redux';
 
+import { messageToInsert } from './data-mocks/messages';
 import {
     Message,
     SET_MESSAGES,
     DELETE_MESSAGE,
+    ADD_SERVICE_MESSAGE,
     SetMessagesAction,
     DeleteMessageAction,
+    AddServiceMessageAction,
 } from './types';
 
 const UPDATE_RATE = 'UPDATE_RATE';
@@ -24,7 +27,7 @@ const rateReducer = (state = '0', action: UpdateRateAction) => {
     }
 };
 
-type MessagesAction = SetMessagesAction | DeleteMessageAction;
+type MessagesAction = SetMessagesAction | DeleteMessageAction | AddServiceMessageAction;
 
 const messagesReducer = (state: Message[] = [], action: MessagesAction): Message[] => {
     switch (action.type) {
@@ -45,6 +48,18 @@ const messagesReducer = (state: Message[] = [], action: MessagesAction): Message
                 ) {
                     return newState;
                 } else return [...newState, message];
+            }, []);
+        case ADD_SERVICE_MESSAGE:
+            return state.reduce((newState: Message[], message) => {
+                if (action.payload === message.id) {
+                    return [
+                        ...newState,
+                        { ...message, serviceAdded: true },
+                        { ...messageToInsert, id: `serviceFor${action.payload}`, isService: true },
+                    ];
+                } else {
+                    return [...newState, message];
+                }
             }, []);
         default:
             return state;
