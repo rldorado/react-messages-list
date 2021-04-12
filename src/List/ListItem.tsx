@@ -1,5 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
+import { rateSelector } from '../selectors';
 import { Message } from './../types';
 
 type ListItemProps = {
@@ -9,16 +11,22 @@ type ListItemProps = {
 export const ListItem = ({ message }: ListItemProps) => {
     const { text, btcAmount, messageContent } = message;
 
+    const rate: number = parseFloat(useSelector(rateSelector));
+
     return (
-        <div className="card my-2">
+        <div className="card border-primary mb-2">
             <div className="card-body">
-                <h5 className="card-title">{text}</h5>
+                <h5 className="card-title text-primary">{text}</h5>
                 {Array.isArray(messageContent) ? (
                     <div>
                         {messageContent.map(({ source, amount }, index) => (
                             <p key={index} className="card-text">
-                                {source}: {amount}{' '}
-                                <small className="text-muted">{btcAmount} USD</small>
+                                {source + ': ' + amount + ' BTC '}
+                                {btcAmount && (
+                                    <span className="text-muted">
+                                        {(btcAmount * rate).toFixed(5)} USD
+                                    </span>
+                                )}
                             </p>
                         ))}
                     </div>

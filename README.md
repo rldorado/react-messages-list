@@ -1,2 +1,3 @@
-# frontend-test-task
-Paxful frontend test task
+# React messages list
+
+Webapp made with React to render lists of Bitcoin rates.

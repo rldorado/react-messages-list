@@ -1,4 +1,5 @@
 export const SET_MESSAGES = 'SET_MESSAGES';
+export const UPDATE_RATE = 'UPDATE_RATE';
 
 // Interfaces
 export type Message = {
@@ -20,4 +21,9 @@ export type State = {
 export type SetMessagesAction = {
     type: typeof SET_MESSAGES;
     payload: Message[];
+};
+
+export type UpdateRateAction = {
+    type: typeof UPDATE_RATE;
+    payload: string;
 };

@@ -11,6 +11,8 @@ type UpdateRateAction = {
 
 const rateReducer = (state = '0', action: UpdateRateAction) => {
     switch (action.type) {
+        case UPDATE_RATE:
+            return action.payload;
         default:
             return state;
     }
